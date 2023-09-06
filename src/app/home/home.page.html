@@ -1,20 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-refresher slot="fixed" (ionRefresh)="tailai($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-card *ngFor="let donhang of danhsach">
+    <ion-card-content>
+      <div> Khách hàng: {{donhang.khachhang}} </div>
+      <div> Điện thoại: {{donhang.dienthoai}} </div>
+      <div> Địa chỉ: {{donhang.diachi}} </div>
+      <div> Thời gian: {{donhang.thoigian}} </div>
+      <div> Trạng thái: <span [style]="'color: ' + trangthai[donhang.trangthai].mau">{{trangthai[donhang.trangthai].ten}}</span> </div>
+      <div> Tổng tiền: {{donhang.tongtien}} </div>
+      <ion-row style="border-top: 1px solid lightgray;" *ngFor="let hanghoa of donhang.chitiet">
+        <ion-col size="12"> {{hanghoa.tenhang}} </ion-col>
+        <ion-col size="4" class="currency"> {{hanghoa.giaban}} </ion-col>
+        <ion-col size="4" class="text-right"> {{hanghoa.soluong}} </ion-col>
+        <ion-col size="4" class="text-right currency"> {{hanghoa.giaban * hanghoa.soluong}} </ion-col>
+      </ion-row>
+
+      <ion-button fill="clear" (click)="doitrangthai(donhang.id, 1)"> Chuẩn bị hàng </ion-button>
+      <ion-button fill="clear" (click)="doitrangthai(donhang.id, 2)"> Đã gửi hàng </ion-button>
+      <ion-button fill="clear" (click)="doitrangthai(donhang.id, 3)" color="danger"> Huỷ gửi hàng </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
